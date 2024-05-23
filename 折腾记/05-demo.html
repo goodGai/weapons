@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input class="input" type="text">
+  <button class="btn">Get</button>
+  <button class="disable">disable</button>
+  <button class="readonly">readonly</button>
+
+  <button class="submit">submit</button>
+
+  <script>
+    const btn = document.querySelector('.btn');
+    const disable = document.querySelector('.disable');
+    const readonly = document.querySelector('.readonly');
+    const input = document.querySelector('.input');
+    const submit = document.querySelector('.submit');
+
+    
+    
+    btn.addEventListener('click', () => {
+      console.log(input.value)
+    })
+    disable.addEventListener('click', () => {
+      console.log(input)
+      input.disabled = true;
+    })
+    readonly.addEventListener('click', () => {
+      input.readOnly = true;
+    })
+    // submit.addEventListener('click', () => {
+      
+    // })
+      // 模拟点击 "Get" 按钮
+      function simulateClick() {
+        const clickEvent = new MouseEvent('click', {
+          bubbles: true,
+          cancelable: true,
+          view: window
+        });
+
+        btn.dispatchEvent(clickEvent);
+      }
+
+      // 调用模拟点击函数
+      simulateClick();
+  </script>
+</body>
+</html>

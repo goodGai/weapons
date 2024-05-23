@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // const users = {
+    //   "a": {
+    //     name: "张三",
+    //     age: 20,
+    //     address: '南山'
+    //   },
+    //   "b": {
+    //     name: "李四",
+    //     age: 30
+    //   }
+    // }
+     users = {}
+    const usersRole = {
+      "a": {
+        address: "深圳"
+      },
+      "c": {
+        address: "长沙"
+      }
+    }
+
+    for (let key in usersRole) {
+      if (users.hasOwnProperty(key)) {
+          // 如果存在则更新
+          users[key] = Object.assign({}, users[key], usersRole[key])
+          console.log(1, users[key])
+        } else if (Reflect.ownKeys(users).length === 0) {
+          console.log(users)
+          users = Object.assign({}, usersRole, users)
+          console.log(2, users)
+          break;
+        } else {
+          users[key] = Object.assign({}, usersRole[key])
+          console.log(3, users[key])
+        }
+    }
+    console.log(users)
+  </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Text Strikethrough</title>
+<style>
+  .strikethrough {
+    position: relative;
+    display: inline-block;
+  }
+
+  .strikethrough::before,
+  .strikethrough::after {
+    content: '';
+    position: absolute;
+    bottom: 50%; /* 将线条放置在文字的中间 */
+    width: calc(50% - 5px); /* 线条宽度为文本宽度的一半 */
+    height: 1px;
+    background-color: black;
+  }
+
+  .strikethrough::before {
+    left: 0;
+    margin-left: -200px; /* 留出一定的间距 */
+  }
+
+  .strikethrough::after {
+    right: 0;
+    margin-right: -20px; /* 留出一定的间距 */
+  }
+</style>
+</head>
+<body>
+
+<p class="strikethrough">哈哈哈哈</p>
+
+</body>
+</html>

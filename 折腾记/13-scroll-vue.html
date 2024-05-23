@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Horizontal Scrollable Div with Vue</title>
+<style>
+    .container {
+        width: 300px;
+        overflow-x: hidden;
+        white-space: nowrap;
+        display: flex;
+    }
+    .item {
+        min-width: 300px;
+        flex: 1;
+        margin-right: 10px; /* Optional: Add some spacing between items */
+        touch-action: pan-y; /* Allow vertical scrolling */
+    }
+</style>
+</head>
+<body>
+<div id="app">
+    <div class="container" ref="scrollContainer" @mousedown="startDrag" @touchstart="startDrag">
+        <div class="item" v-for="(content, index) in contents" :key="index" v-text="content" :style="{ width: itemWidths[index] + 'px' }"></div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script>
+new Vue({
+    el: '#app',
+    data: {
+        contents: ["Content 1", "Content 2", "Content 3"], // Add more contents here
+        itemWidths: [],
+        isDragging: false,
+        startX: 0,
+        scrollLeft: 0
+    },
+    mounted() {
+        this.calculateItemWidths();
+        window.addEventListener('resize', this.calculateItemWidths);
+    },
+    beforeDestroy() {
+        window.removeEventListener('resize', this.calculateItemWidths);
+    },
+    methods: {
+        calculateItemWidths() {
+            const containerWidth = this.$refs.scrollContainer.offsetWidth;
+            const numItems = this.contents.length;
+            const avgWidth = containerWidth / numItems;
+            this.itemWidths = this.contents.map(() => Math.max(avgWidth, 300)); // Minimum width of 300px
+        },
+        startDrag(e) {
+            this.isDragging = true;
+            this.startX = e.pageX || e.touches[0].pageX;
+            this.scrollLeft = this.$refs.scrollContainer.scrollLeft;
+            document.addEventListener('mousemove', this.drag);
+            document.addEventListener('touchmove', this.drag);
+            document.addEventListener('mouseup', this.stopDrag);
+            document.addEventListener('touchend', this.stopDrag);
+        },
+        drag(e) {
+            if (!this.isDragging) return;
+            const x = e.pageX || e.touches[0].pageX;
+            const walk = (x - this.startX) * 2;
+            this.$refs.scrollContainer.scrollLeft = this.scrollLeft - walk;
+        },
+        stopDrag() {
+            this.isDragging = false;
+            document.removeEventListener('mousemove', this.drag);
+            document.removeEventListener('touchmove', this.drag);
+            document.removeEventListener('mouseup', this.stopDrag);
+            document.removeEventListener('touchend', this.stopDrag);
+        }
+    }
+});
+</script>
+</body>
+</html>

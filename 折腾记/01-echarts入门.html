@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>incom</title>
+  <style>
+    #main {
+      margin: 100px auto 0;
+    }
+  </style>
+</head>
+
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+
+<body>
+  <div id="main" style="width: 1200px;height:800px;"></div>
+  <script>
+    // import * as echarts from "echarts";
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById("main"));
+    console.log('echarts', echarts)
+    const xData = []
+    const serieData = []
+    const seriesData = []
+    let incom = 0
+    let y = 0
+    let he = 0
+    for (var i = 20; i < 31; i++) {
+      xData.push(i) 
+      if (i < 23) {
+        y = 0
+        he = 0
+      } else {
+        y = 2000 * (i - 23) + 9000
+        he = 4500
+      }
+      incom += y * 13 - he * 12
+      serieData.push(y/10000)
+      seriesData.push(Math.floor(incom/10000))
+    }
+    // 绘制图表
+    const option = {
+      xAxis: {
+        data: xData
+      },
+      yAxis: {},
+      series: [{
+        data: seriesData,
+        type: 'line',
+        smooth: true,
+        label: {
+          show: true,
+          position: 'top',
+          textStyle: {
+            fontSize: 20
+          }
+        }
+      },{
+        data: serieData,
+        type: 'line',
+        smooth: true,
+        label: {
+          show: true,
+          position: 'top',
+          textStyle: {
+            fontSize: 20
+          }
+        }
+      }]
+    };
+    myChart.setOption(option);
+  </script>
+</body>
+
+</html>

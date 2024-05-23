@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Horizontal Scrollable Div</title>
+<style>
+    .container {
+        width: 300px;
+        overflow-x: hidden;
+        white-space: nowrap;
+        display: flex;
+    }
+    .item {
+        min-width: 300px;
+        flex: 1;
+        margin-right: 10px; /* Optional: Add some spacing between items */
+        touch-action: pan-y; /* Allow vertical scrolling */
+    }
+</style>
+</head>
+<body>
+<div class="container" id="scrollContainer">
+    <div class="item" style="width: 350px;">Content 1</div>
+    <div class="item" style="width: 250px;">Content 2</div>
+    <div class="item" style="width: 400px;">Content 3</div>
+    <!-- Add more items here -->
+</div>
+
+<script>
+    let isDragging = false;
+    let startX, scrollLeft;
+
+    const scrollContainer = document.getElementById('scrollContainer');
+
+    scrollContainer.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        startX = e.pageX - scrollContainer.offsetLeft;
+        scrollLeft = scrollContainer.scrollLeft;
+    });
+
+    scrollContainer.addEventListener('mouseleave', () => {
+        isDragging = false;
+    });
+
+    scrollContainer.addEventListener('mouseup', () => {
+        isDragging = false;
+    });
+
+    scrollContainer.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX - scrollContainer.offsetLeft;
+        const walk = (x - startX) * 2;
+        scrollContainer.scrollLeft = scrollLeft - walk;
+    });
+
+    // For touch devices
+    scrollContainer.addEventListener('touchstart', (e) => {
+        isDragging = true;
+        startX = e.touches[0].pageX - scrollContainer.offsetLeft;
+        scrollLeft = scrollContainer.scrollLeft;
+    });
+
+    scrollContainer.addEventListener('touchend', () => {
+        isDragging = false;
+    });
+
+    scrollContainer.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.touches[0].pageX - scrollContainer.offsetLeft;
+        const walk = (x - startX) * 2;
+        scrollContainer.scrollLeft = scrollLeft - walk;
+    });
+</script>
+</body>
+</html>

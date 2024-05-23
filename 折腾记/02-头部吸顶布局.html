@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+      border: 1px solid hotpink;
+      /* margin-top: 20px; */
+      padding: 0 20px;
+      padding-top: 30px;
+    }
+    .box {
+      height: 1000px;
+      border: 1px solid skyblue;
+      overflow: auto;
+    }
+    ul li {
+      list-style: none;
+      margin: 10px 0;
+      border: 1px solid sandybrown;
+    }
+    .nav {
+      position: fixed;
+      width: calc(100% - 40px);
+      /* width: 100%; */
+      height: 60px;
+      top: 60px;
+      z-index: 998;
+      background-color: seagreen;
+      color: #fff;
+      text-align: center;
+      line-height: 60px;
+    }
+    .item {
+      height: 180px;
+    }
+  </style>
+  <script src="https://appstatic.cmschina.com/npm/static/js/zs/cmsbridge.1.0.1.min.js"></script>
+</head>
+<body>
+  <div class="box">
+    <ul>
+      <li>
+        <div class="item">
+        </div>
+      </li>
+      <li>
+        <div class="item">
+        </div>
+      </li>
+      <li>
+        <div class="item">
+        </div>
+      </li>
+      <li>
+        <div class="item">
+        </div>
+      </li>
+      <li>
+        <div class="item">
+        </div>
+      </li>
+      <li>
+        <div class="item">
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="nav">
+    导航栏
+  </div>
+  <script>
+    for(var i = 0 ; i < 10 ; i++){
+      console.log(Math.floor(Math.random() * 30) + 60)
+    }
+  </script>
+</body>
+</html>

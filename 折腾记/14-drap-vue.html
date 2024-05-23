@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <div
+      class="draggable"
+      ref="draggable"
+      :style="{ height: height + 'px', top: top + 'px' }"
+      @mouseover="handleMouseOver"
+      @mouseleave="handleMouseLeave"
+      @mousedown="handleMouseDown"
+    >
+      Drag Me
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+  
+  <script>
+    new Vue({
+      el: '#app',
+      data() {
+        return {
+          isDragging: false,
+          startY: 0,
+          startHeight: 0,
+          top: 0,
+          height: 100
+        };
+      },
+      methods: {
+        handleMouseOver(event) {
+          const { clientY } = event;
+          const rect = this.$refs.draggable.getBoundingClientRect();
+          if (clientY < rect.top + 10) {
+            this.$refs.draggable.style.cursor = 'n-resize';
+          } else if (clientY > rect.bottom - 10) {
+            this.$refs.draggable.style.cursor = 's-resize';
+          } else {
+            this.$refs.draggable.style.cursor = 'move';
+          }
+        },
+        handleMouseLeave() {
+          this.$refs.draggable.style.cursor = 'auto';
+        },
+        handleMouseDown(event) {
+          this.isDragging = true;
+          this.startY = event.clientY;
+          this.startHeight = this.height;
+          window.addEventListener('mousemove', this.handleMouseMove);
+          window.addEventListener('mouseup', this.handleMouseUp);
+        },
+        handleMouseMove(event) {
+          if (this.isDragging) {
+            const deltaY = event.clientY - this.startY;
+            const rect = this.$refs.draggable.getBoundingClientRect();
+            if (event.clientY < rect.top + 10) {
+              this.height = this.startHeight - deltaY;
+              this.top += deltaY;
+            } else if (event.clientY > rect.bottom - 10) {
+              this.height = this.startHeight + deltaY;
+            } else {
+              this.top += deltaY;
+            }
+          }
+        },
+        handleMouseUp() {
+          this.isDragging = false;
+          window.removeEventListener('mousemove', this.handleMouseMove);
+          window.removeEventListener('mouseup', this.handleMouseUp);
+        }
+      }
+    })
+  </script>
+  
+  <style>
+  .draggable {
+    position: absolute;
+    width: 200px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    cursor: move;
+  }
+  </style>
+  
+</body>
+</html>

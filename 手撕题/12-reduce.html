@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function _reduce(cb, init) {
+      var res = this[0]
+      var i = 1 
+      if (init) {
+        res = init
+        i = 0
+      }
+      for (; i < this.length ; i++) {
+        res = cb(res, this[i], i , this)
+      }
+      return res
+    }
+    Array.prototype.reduce = _reduce
+    
+    var arr = [1,21,3,4]
+    // console.log(arr.reduce((a,b) => {
+    //   return a+1;
+    // }))
+
+
+    console.log(arr.reduce(a, b => a+b))
+
+    // console.log(arr.reduce((a,b) => {
+    //   return Math.max(a,b);
+    // }))
+    const nameArray = ['david', 'frank', 'livia','frank','david','david','livia','frank','david','frank'];
+    const objValue = nameArray.reduce(
+      (accumulation, currentValue, currentIndex, arr) => {
+        accumulation[currentValue] = (accumulation[currentValue] || 0) + 1;
+        return accumulation;
+      },
+      {}
+    );
+    // console.log(objValue);
+
+    // console.log(arr.reduce((a,b) => {
+    //   return a+1;
+    // }))
+
+    const studentData = [
+      { name: "Alice", grade: 1 },
+      { name: "Bob", grade: 2 },
+      { name: "Charlie", grade: 1 },
+      { name: "David", grade: 3 },
+      { name: "Eve", grade: 2 },
+      { name: "Frank", grade: 3 },
+    ];
+
+    // 对年级进行分类
+    const reduceStudent = studentData.reduce(
+      (accumulation, currentValue, currentIndex, arr) => {
+        Reflect.has(accumulation, currentValue.grade)
+          ? accumulation[currentValue.grade].push(currentValue)
+          : (accumulation[currentValue.grade] = [currentValue]);
+        return accumulation;
+      },
+      {}
+    );
+
+    // console.log(reduceStudent);
+
+
+  </script>
+</body>
+</html>
