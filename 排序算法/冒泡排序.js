@@ -1,5 +1,6 @@
 const arr = ['A', 'E', 'B', 'D', 'C'];
 
+// 写法一
 // const bubleSort = (arr) => {
 //     let length = arr.length - 1;
 //     for (var i = 0; i < length; i++) {
@@ -14,6 +15,7 @@ const arr = ['A', 'E', 'B', 'D', 'C'];
 //     return arr;
 // }
 
+// 写法二
 const bubleSort = (arr) => {
     let length = arr.length - 1;
     while(length) {
