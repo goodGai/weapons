@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Binary Search Tree Example</title>
+</head>
+
+<body>
+    <script type="module">
+        import {BST} from './01-二叉树设计.js'
+        var bst = new BST();
+        bst.insert(10);
+        bst.insert(8);
+        bst.insert(2);
+        bst.insert(7);
+        bst.insert(5);
+
+        console.log('bst', bst);
+        // 中序
+        inOrder(bst.root)
+    </script>
+</body>
+
+</html>

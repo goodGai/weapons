@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <SCript>
+        function extractData(input) {
+            // 定义一个正则表达式来匹配格式 &&&&数据||||
+            // const regex = /^&&&&(.+?)\|\|\|\|$/;
+            const regex = /&&&&(.+?)\|\|\|\|/;
+
+            // 使用正则表达式测试输入字符串是否匹配
+            const match = input.match(regex);
+            console.log(match);
+            if (match) {
+                // 如果匹配成功，返回提取的数据部分
+                return match[1];
+            } else {
+                // 如果不匹配，返回 null 或者其他合适的值表示不符合格式
+                return null;
+            }
+        }
+
+        // 测试
+        // const message = `&&&&{"name": "zs","age": {}}||||`;
+        const message = "dadadad||||&&&&sfdafadadad|||| ";
+        // dadadad||||&&&&sfdafadadad||||
+        const extractedData = extractData(message);
+
+        if (extractedData !== null) {
+            console.log("提取的数据是:", extractedData); // 输出: 提取的数据是: 数据
+        } else {
+            console.log("输入字符串不符合格式"+extractedData);
+            console.log('extractedData', JSON.parse(extractedData));
+        }
+    </SCript>
+</body>
+
+</html>
