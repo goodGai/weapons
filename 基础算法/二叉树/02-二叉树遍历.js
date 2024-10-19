@@ -1,18 +1,18 @@
 // 根序遍历 根左右
 function preOrder(node) {
     if(node) {
-        console.log(node.show())
-        inOrder(node.left)
-        inOrder(node.right)
+        console.log(node.show());
+        preOrder(node.left);
+        preOrder(node.right);
     }
 }
 
 // 中序遍历 左中右
-function inOrder(node) {
+function inOrder(node = this.root) {
     if(node) {
-        inOrder(node.left)
-        console.log(node.show())
-        inOrder(node.right)
+        inOrder(node.left);
+        console.log(node.show());
+        inOrder(node.right);
     }
 }
 
@@ -22,6 +22,12 @@ function postOrder(node) {
         //左右根
         postOrder(node.left);
         postOrder(node.right);
-        console.log(node.show())
+        console.log(node.show());
     }
+}
+
+module.exports = {
+    preOrder,
+    inOrder,
+    postOrder
 }

@@ -1,4 +1,5 @@
-import {getMin} from './03-二叉树查找';
+const { inOrder, preOrder, postOrder } = require('./02-二叉树遍历');
+const { getMin, getMax, getValue } = require('./03-二叉树查找');
 
 class Node {
     constructor(data, left = null, right = null) {
@@ -12,7 +13,7 @@ class Node {
     }
 }
 
-export class BST {
+class BST {
     constructor() {
         this.root = null;
         // 插入
@@ -20,10 +21,16 @@ export class BST {
         // 最小值
         this.getMin = getMin;
         // 最大值
+        this.getMax = getMax;
 
+        // 某值
+        this.getValue = getValue;
         // 删除
 
         // 遍历
+        this.preOrder = preOrder;
+        this.inOrder = inOrder;
+        this.postOrder = postOrder;
     }
 }
 
@@ -46,3 +53,7 @@ function insert(val) {
         }
     }
 }
+
+module.exports = {
+    BST
+};
