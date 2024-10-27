@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>骨架屏示例</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+        .skeleton {
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            margin: 10px 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .skeleton-title {
+            height: 24px;
+            width: 60%;
+            margin: 10px 0;
+            animation: pulse 1.5s infinite;
+        }
+        .skeleton-image {
+            height: 200px;
+            width: 100%;
+            animation: pulse 1.5s infinite;
+        }
+        .skeleton-paragraph {
+            height: 16px;
+            width: 100%;
+            margin: 5px 0;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% {
+                background-color: #e0e0e0;
+            }
+            50% {
+                background-color: #d0d0d0;
+            }
+            100% {
+                background-color: #e0e0e0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="skeleton">
+        <div class="skeleton-title"></div>
+        <div class="skeleton-image"></div>
+        <div class="skeleton-paragraph"></div>
+        <div class="skeleton-paragraph"></div>
+        <div class="skeleton-paragraph"></div>
+    </div>
+
+    <div class="skeleton">
+        <div class="skeleton-title"></div>
+        <div class="skeleton-image"></div>
+        <div class="skeleton-paragraph"></div>
+        <div class="skeleton-paragraph"></div>
+        <div class="skeleton-paragraph"></div>
+    </div>
+</body>
+</html>
