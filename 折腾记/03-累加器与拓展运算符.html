@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const arr = ['name', 'age', 4, 34, 3, 4, 3, 43, 3]
+
+        const target = {
+            name: '张三',
+            age: 33,
+        }
+
+        console.log(arr.reduce((pre, cur) => ({
+            ...pre,
+            [cur]: target[cur]
+        }), {}))
+
+
+        console.log(arr.reduce((pre, cur) => {
+            pre[cur] = target[cur];
+            return pre;
+        }, {}));
+    </script>
+</body>
+
+</html>

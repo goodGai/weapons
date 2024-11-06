@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const arr = [{
+            name: 'zs',
+            age: 30,
+            dmeo: 'cc',
+            arr: [12,3,3,4,45]
+        },{
+            name: 'lis',
+            age: 99,
+            frank: 'hah',
+            arr1: []
+        }]
+
+        console.log(arr.reduce((pre, cur) => {
+            const temp = Object.entries(cur).reduce((total, curItem) => {
+                const value = curItem[1];
+                return {
+                    ...total,
+                    [curItem[0]]: (Array.isArray(value) ? !!value.length : !!String(value)) ?
+                        curItem[1] : undefined,
+                };
+            }, {});
+            return {
+                ...pre,
+                ...temp
+            }
+        }, {}))
+
+
+        console.log(arr.reduce((pre, cur) => {
+            for (const [key, value] of Object.entries(cur)) {
+                // 检查值是否有效，并根据结果进行赋值
+                pre[key] = (Array.isArray(value) ? !!value.length : !!String(value)) ? value : undefined;
+            }
+            return pre;
+        }, {}));
+    </script>
+</body>
+
+</html>
