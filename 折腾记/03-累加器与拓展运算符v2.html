@@ -21,6 +21,7 @@
             arr1: []
         }]
 
+        // 写法1
         console.log(arr.reduce((pre, cur) => {
             const temp = Object.entries(cur).reduce((total, curItem) => {
                 const value = curItem[1];
@@ -36,7 +37,7 @@
             }
         }, {}))
 
-
+        // 写法2
         console.log(arr.reduce((pre, cur) => {
             for (const [key, value] of Object.entries(cur)) {
                 // 检查值是否有效，并根据结果进行赋值
