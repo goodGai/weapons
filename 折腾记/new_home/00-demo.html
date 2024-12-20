@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js 动态布局示例</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <style>
+        /* 样式保持不变 */
+        .container {
+            display: flex;
+            width: 1336px;
+            margin: 0 auto;
+        }
+
+        .left {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid skyblue;
+            margin-right: 30px;
+        }
+
+        .right {
+            width: 200px;
+            padding: 10px 30px;
+            border: 1px solid hotpink;
+            position: relative;
+        }
+
+        .right .last {
+            border: 1px solid saddlebrown;
+            height: 20px;
+            position: absolute;
+            /* width: 80%; */
+            bottom: 0;
+            right: 0;
+            left: 0;
+        }
+
+        .demo {
+            border: 1px solid khaki;
+            width: 60%;
+            margin: 0;
+        }
+
+        .center {
+            position: absolute;
+            left: 0;
+            border: 1px solid khaki;
+        }
+
+        .left .div-item {
+            height: 300px;
+            margin: 5px;
+            padding: 10px;
+            background-color: #dcdcdc;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        .left .div-item:nth-child(odd) {
+            background-color: #f0f0f0;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .row .div-item {
+            box-sizing: border-box;
+        }
+
+        /* 核心布局策略：通过传递参数来动态控制每个 div 的宽度 */
+        .row-1 .div-item {
+            min-width: 100%;
+        }
+
+        .row-2 .div-item {
+            /* min-width: 48%; */
+            min-width: 500px;
+        }
+
+        .row-3 .div-item {
+            /* min-width: 31%; */
+            min-width: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="container">
+            <!-- 左侧部分 -->
+            <div class="left">
+                <div class="row" :class="rowClass">
+                    <!-- 根据选中的 div 数量渲染左侧 div -->
+                    <div v-for="index in checkedDivs" :key="index" class="div-item">
+                        {{ index }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧部分，包含多选框 -->
+            <div class="center">
+                <div v-for="n in arr" :key="n">
+                    <input type="checkbox" :id="'checkbox' + n" v-model="checkedDivs" :value="n">
+                    <label :for="'checkbox' + n">选择 {{ n }}</label>
+                </div>
+            </div>
+            <!-- 右侧部分，包含多选框 -->
+            <div class="right">
+                <div v-for="n in 6" :key="n">
+                    <div>{{n}}</div>
+                </div>
+                <div class="last">
+                    <div class="demo">haha</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    checkedDivs: [], // 存储已选中的 div 数量
+                    arr: ['美猴王', '沙和尚', '孙悟空', '猪八戒', '唐三藏', '锤哥']
+                };
+            },
+            computed: {
+                // 根据选中的 div 数量选择对应的布局策略
+                rowClass() {
+                    const divCount = this.checkedDivs.length;
+                    // 策略映射表
+                    const strategies = {
+                        1: this._singleDivStrategy,
+                        2: this._pairDivsStrategy,
+                        3: this._tripleDivsStrategy,
+                        4: this._pairDivsStrategy, // 4个div跟2个div的布局是类似的
+                        5: this._tripleDivsStrategy, // 5个div可以类比3个div的布局
+                        6: this._tripleDivsStrategy // 6个div可以类比3个div1的布局
+                    };
+
+                    // 返回对应策略
+                    return strategies[divCount] ? strategies[divCount]() : '';
+                }
+            },
+            methods: {
+                // 策略方法
+                _singleDivStrategy() {
+                    return 'row-1'; // 1 个 div 占满整行
+                },
+                _pairDivsStrategy() {
+                    return 'row-2'; // 2 或 4 个 div 每个占 50%
+                },
+                _tripleDivsStrategy() {
+                    return 'row-3'; // 3，5 或 6 个 div 每个占 33%
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

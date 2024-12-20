@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js 动态布局示例</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <style>
+        .container {
+            display: flex;
+        }
+
+        .left {
+            flex: 1;
+            padding: 10px;
+        }
+
+        .right {
+            width: 200px;
+            padding: 10px;
+        }
+
+        .left .div-item {
+            margin: 5px;
+            padding: 10px;
+            background-color: #dcdcdc;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        .left .div-item:nth-child(odd) {
+            background-color: #f0f0f0;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        /* 合并后的 CSS 样式 */
+        .row-1 .div-item {
+            flex: 0 0 100%;
+        }
+
+        /* 1 个 div 占满整行 */
+        .row-2 .div-item {
+            flex: 0 0 48%;
+        }
+
+        /* 2 个 div 每个占 50% */
+        .row-3 .div-item {
+            flex: 0 0 31%;
+        }
+
+        /* 3 个 div 每个占 33% */
+        .row-4 .div-item {
+            flex: 0 0 48%;
+        }
+
+        /* 4 个 div 每个占 50% */
+        .row-5 .div-item {
+            flex: 0 0 31%;
+        }
+
+        /* 5 个 div 每个占 33% */
+        .row-6 .div-item {
+            flex: 0 0 31%;
+        }
+
+        /* 6 个 div 每个占 33% */
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="container">
+            <!-- 左侧部分 -->
+            <div class="left">
+                <div class="row" :class="rowClass">
+                    <!-- 根据选中的 div 数量渲染左侧 div -->
+                    <div v-for="index in checkedDivs" :key="index" class="div-item">
+                        Div {{ index }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧部分，包含多选框 -->
+            <div class="right">
+                <div v-for="n in 6" :key="n">
+                    <input type="checkbox" :id="'checkbox' + n" v-model="checkedDivs" :value="n">
+                    <label :for="'checkbox' + n">选择 Div {{ n }}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    checkedDivs: [], // 存储已选中的 div 数量
+                };
+            },
+            computed: {
+                // 根据选中的 div 数量选择对应的布局策略
+                rowClass() {
+                    const divCount = this.checkedDivs.length;
+
+                    // 策略映射表
+                    const strategies = {
+                        1: 'row-1', // 1 个 div 占满整行
+                        2: 'row-2', // 2 个 div 每个占 50%
+                        3: 'row-3', // 3 个 div 每个占 33%
+                        4: 'row-4', // 4 个 div 每行 2 个
+                        5: 'row-5', // 5 个 div 每行 3 个，分两行
+                        6: 'row-6' // 6 个 div 每行 3 个，分两行
+                    };
+
+                    // 返回对应策略
+                    return strategies[divCount] || ''; // 如果没有匹配的 div 数量，则不返回类名
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
